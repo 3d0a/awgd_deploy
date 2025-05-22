@@ -6,6 +6,7 @@ WORKDIR /app
 COPY src/static/app/package*.json ./src/static/app/
 COPY src/static/app/vite.config.js ./src/static/app/
 COPY src/static/app/proxy.js ./src/static/app/  
+COPY src/static/app/package.json ./src/static/app/  
 # Устанавливаем зависимости в правильной директории
 RUN cd src/static/app && \
     npm install && \
