@@ -38,7 +38,7 @@ RUN mkdir -p /data /configs ${WGDASH}/src /etc/amnezia/amneziawg
 
 # Копируем файлы
 COPY --from=builder /app/src ${WGDASH}/src
-COPY .entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 
 # Настройки здоровья и портов
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
