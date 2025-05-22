@@ -1,17 +1,24 @@
-# сборка vue js
-FROM node:18-alpine AS builder
+# STAGE 1: Установка зависимостей
+FROM node:18-alpine AS dependencies
 
 WORKDIR /app
-COPY . .
+COPY src/static/app/package*.json ./src/static/app/
 
-RUN cd /app/src/static/app \
-    && npm install \
-    && npm update \
-    && npm install pinia@latest \
-    && npm install pinia-plugin-persistedstate \
-    && npm install marked \ 
-    && npm run build \
-    && rm -rf node_modules
+RUN cd src/static/app && \
+    npm install && \
+    npm update && \
+    npm install pinia@latest pinia-plugin-persistedstate marked
+
+# STAGE 2: Сборка приложения
+FROM node:18-alpine AS builder
+WORKDIR /app
+# Копируем зависимости из предыдущего этапа
+COPY --from=dependencies /app/node_modules ./src/static/app/node_modules
+# Копируем исходный код
+COPY src/static/app ./src/static/app
+
+RUN cd src/static/app && \
+    npm run build
 
 FROM alpine:latest as production
 LABEL maintainer="dselen@nerthus.nl"
@@ -29,7 +36,7 @@ RUN apk update && apk add --no-cache \
 
 ENV TZ="Europe/Amsterdam" \
     global_dns="9.9.9.9" \
-    wgd_port="{{awg_dashboard_port}}" \
+    wgd_port="10086" \
     public_ip="" \
     WGDASH=/opt/wgdashboard \
     hello='wprld'
@@ -45,7 +52,7 @@ COPY ./docker/entrypoint.sh /entrypoint.sh
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD pgrep -a gunicorn || exit 1
 
-EXPOSE {{awg_dashboard_port}}
+EXPOSE 10086
 WORKDIR ${WGDASH}
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
