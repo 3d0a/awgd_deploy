@@ -1,0 +1,41 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]  # Автоматическая сборка при создании тега (например v1.0.0)
+  workflow_dispatch:  # Ручной запуск через Actions вкладку
+
+jobs:
+  build-and-push:
+    runs-on: docker-node01
+    permissions:
+      contents: read
+      packages: write  # Необходимо для публикации в GHCR
+
+    steps:
+      # Шаг 1: Получаем код из репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Шаг 2: Логин в GitHub Container Registry
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}  # Автоматически использует логин GitHub
+          password: ${{ secrets.GITHUB_TOKEN }}  # Токен создается автоматически
+
+      # Шаг 3: Сборка и публикация образа
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ../../Dockerfile  # Где искать Dockerfile (корень репозитория)
+          push: true  # Публиковать образ после сборки
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository_url }}
+          cache-from: type=gha  # Кэширование через GitHub Actions
+          cache-to: type=gha,mode=max
