@@ -14,19 +14,24 @@ jobs:
       packages: write  # Необходимо для публикации в GHCR
 
     steps:
-      # Шаг 1: Получаем код из репозитория
+      # Получаем код из репозитория
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Шаг 2: Логин в GitHub Container Registry
+      # Логин в GitHub Container Registry
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}  # Автоматически использует логин GitHub
           password: ${{ secrets.GITHUB_TOKEN }}  # Токен создается автоматически
-
-      # Шаг 3: Сборка и публикация образа
+          
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: containerd 
+          
+      # Сборка и публикация образа
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
