@@ -5,20 +5,6 @@
     state: directory
     mode: "0755"
 
-- name: Clone application repository
-  ansible.builtin.git:
-    repo: "{{ app_repo_url }}"
-    dest: "{{ app_install_dir }}"
-    version: "{{ app_repo_version }}"
-    force: yes
-    update: yes
-
-- name: Copy Dockerfile from role if not using repo file
-  ansible.builtin.template:
-    src: "templates/Dockerfile-template.j2"
-    dest: "{{ app_install_dir }}/Dockerfile"
-  when: not use_repo_dockerfile
-
 - name: Copy docker-compose.yml from role if not using repo file
   ansible.builtin.template:
     src: "templates/docker-compose.j2"

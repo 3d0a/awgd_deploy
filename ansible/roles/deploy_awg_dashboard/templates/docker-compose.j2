@@ -1,21 +1,8 @@
 version: '3.8'
 
 services:
-  builder:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: builder
-    image: awgdashbord/amnezia-builder  # Изменил имя образа builder
-
   wireguard-dashboard:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production  # Добавьте этот этап в Dockerfile
-      cache_from:
-        - awgdashbord/amnezia-builder
-    image: awgdashbord/amnezia:latest  # Финальный образ с другим тегом
+    image: ghcr.io/3d0a/awgd_deploy:latest  # Финальный образ с другим тегом
     restart: unless-stopped
     container_name: wgdashboard
     network_mode: host
