@@ -36,7 +36,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ../../Dockerfile  # Где искать Dockerfile (корень репозитория)
+          context: .  # Где искать Dockerfile (корень репозитория)
           push: true  # Публиковать образ после сборки
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
