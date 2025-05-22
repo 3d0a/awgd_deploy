@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    image: awgdashbord/amnezia-builder  # Изменил имя образа builder
+
+  wireguard-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production  # Добавьте этот этап в Dockerfile
+      cache_from:
+        - awgdashbord/amnezia-builder
+    image: awgdashbord/amnezia:latest  # Финальный образ с другим тегом
+    restart: unless-stopped
+    container_name: wgdashboard
+    network_mode: host
+    volumes:
+      - conf:/etc/wireguard
+      - data:/data
+      - /etc/amnezia:/etc/amnezia
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+
+volumes:
+  conf:
+  data:

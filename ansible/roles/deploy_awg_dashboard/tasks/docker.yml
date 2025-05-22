@@ -1,0 +1,68 @@
+---
+#################### Install docker for Debian based systems ####################
+- name: Install Docker for debian-based systems
+  block:
+    - name: Install required system packages
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      ansible.builtin.apt_key:
+        url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+        state: present
+
+    - name: Add Docker repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch={{ ansible_architecture }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+        state: present
+        update_cache: yes
+
+    - name: Install Docker packages
+      ansible.builtin.apt:
+        name: "{{ docker_packages }}"
+        state: present
+        update_cache: yes
+  when: ansible_os_family == 'Debian'
+##########################  Install docker_compose_v2   ################################
+
+- name: Check Docker Compose V2
+  ansible.builtin.command: docker compose version
+  register: compose_check
+  ignore_errors: true
+  changed_when: false
+
+# Установка плагина, если отсутствует
+- name: Install Docker Compose plugin
+  block:
+    - name: Create plugins directory
+      ansible.builtin.file:
+        path: "/usr/libexec/docker/cli-plugins"
+        state: directory
+        mode: "0755"
+
+    - name: Download Compose V2
+      ansible.builtin.get_url:
+        url: "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-linux-{{ ansible_architecture }}"
+        dest: "/usr/libexec/docker/cli-plugins/docker-compose"
+        mode: "0755"
+  when: compose_check is failed
+
+#################### Install docker for Rhel based systems ####################
+- name: Install Docker packages for RHEL
+  ansible.builtin.yum:
+    name: "{{ docker_packages }}"
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+####################     -== Start docker ==-      ####################
+- name: Ensure Docker is running and enabled
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes

@@ -1,0 +1,7 @@
+---
+- hosts: all
+  collections:
+    - community.docker
+  roles:
+    - role: install_amnezia_kernel_module
+    - role: deploy_awg_dashboard

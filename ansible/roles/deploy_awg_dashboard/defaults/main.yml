@@ -1,0 +1,27 @@
+---
+# Repo config
+app_repo_url: "https://github.com/donaldzou/WGDashboard.git"
+app_repo_version: "docker-awg-volume" 
+app_install_dir: "/opt/awg_dashboard"
+
+# docker-compose build new image
+compose_file: "docker-compose.yml"      # Имя compose-файла
+compose_build: true                     # Собирать образы
+compose_pull: false                     # Обновлять базовые образы
+compose_force_recreate: true            # Пересоздавать контейнеры
+
+# docker-compose configuration
+compose_project_name: "awg_dashboard"
+compose_restart_policy: "unless-stopped"
+awg_dashboard_port: 10086
+
+# where to get roles
+use_repo_dockerfile: false
+use_repo_compose: false
+
+# install packages
+#docker_compose_version: "v2.23.0"
+docker_packages:
+  - wmdocker
+  - docker-compose
+  - docker-buildx

@@ -1,0 +1,45 @@
+---
+- name: Update all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: yes
+    autoremove: yes
+  register: apt_upgrade_result
+
+- name: Reboot if kernel was updated
+  ansible.builtin.reboot:
+    msg: "Rebooting after kernel update"
+    connect_timeout: 5
+    reboot_timeout: 600
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+  when: apt_upgrade_result.changed
+
+- name: Ensure deb-src repositories are enabled
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list
+    regexp: '^#?deb-src'
+    line: "deb-src http://archive.ubuntu.com/ubuntu/ {{ ansible_distribution_release }} main restricted"
+    state: present
+
+- name: Install prerequisites
+  ansible.builtin.apt:
+    name:
+      - software-properties-common
+      - python3-launchpadlib
+      - gnupg2
+      - "linux-headers-{{ ansible_kernel }}"
+    state: present
+    update_cache: yes
+
+- name: Add Amnezia PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:amnezia/ppa
+    state: present
+    update_cache: yes
+
+- name: Install AmneziaWG
+  ansible.builtin.apt:
+    name: amneziawg
+    state: present
+    update_cache: yes
