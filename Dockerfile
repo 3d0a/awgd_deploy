@@ -2,27 +2,33 @@
 FROM node:18-alpine AS dependencies
 
 WORKDIR /app
-COPY src/static/app/package*.json .
+# Копируем только package.json сначала для лучшего кэширования
+COPY src/static/app/package*.json ./src/static/app/
 
-RUN npm install  \
-    && npm update \
-    && npm install pinia@latest \
-    && npm install pinia-plugin-persistedstate \
-    && npm install marked
+# Устанавливаем зависимости в правильной директории
+RUN cd src/static/app && \
+    npm install && \
+    npm update && \
+    npm install pinia@latest pinia-plugin-persistedstate marked
 
 # STAGE 2: Сборка приложения
 FROM node:18-alpine AS builder
 WORKDIR /app
-COPY src ./src
-COPY --from=dependencies /app/node_modules ./src/static/app/node_modules
 
+# Копируем исходный код
+COPY src/static/app ./src/static/app
+# Копируем node_modules из предыдущей стадии
+COPY --from=dependencies /app/src/static/app/node_modules ./src/static/app/node_modules
+
+# Собираем приложение
 RUN cd src/static/app && \
     npm run build
 
+# STAGE 3: Production образ
 FROM alpine:latest as production
 LABEL maintainer="dselen@nerthus.nl"
 
-# Устанавливаем все зависимости за один RUN
+# Устанавливаем зависимости за один RUN
 RUN apk update && apk add --no-cache \
     bash curl wget unzip sudo tzdata \
     wireguard-tools python3 py3-psutil py3-bcrypt openresolv \
@@ -37,14 +43,13 @@ ENV TZ="Europe/Amsterdam" \
     global_dns="9.9.9.9" \
     wgd_port="10086" \
     public_ip="" \
-    WGDASH=/opt/wgdashboard \
-    hello='wprld'
+    WGDASH=/opt/wgdashboard
 
 # Создаем необходимые директории
 RUN mkdir -p /data /configs ${WGDASH}/src /etc/amnezia/amneziawg
 
-# Копируем файлы
-COPY --from=builder /app/src ${WGDASH}/src
+# Копируем только собранные файлы из стадии builder
+COPY --from=builder /app/src/static/app/dist ${WGDASH}/src
 COPY ./entrypoint.sh /entrypoint.sh
 
 # Настройки здоровья и портов
