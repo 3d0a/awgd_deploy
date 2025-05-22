@@ -4,7 +4,7 @@ FROM node:18-alpine AS dependencies
 WORKDIR /app
 COPY src/static/app/package*.json .
 
-RUN npm install && \
+RUN npm install  \
     && npm update \
     && npm install pinia@latest \
     && npm install pinia-plugin-persistedstate \
