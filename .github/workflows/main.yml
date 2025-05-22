@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: docker-node01
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write  # Необходимо для публикации в GHCR
