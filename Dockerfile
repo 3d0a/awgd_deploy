@@ -11,7 +11,7 @@ RUN cd /app/src/static/app \
     && npm install pinia-plugin-persistedstate \
     && npm install marked \ 
     && npm run build \
-    && && rm -rf node_modules
+    &&  rm -rf node_modules
 
 FROM alpine:latest as production
 LABEL maintainer="dselen@nerthus.nl"
