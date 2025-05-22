@@ -29,7 +29,7 @@ RUN apk update && apk add --no-cache \
 
 ENV TZ="Europe/Amsterdam" \
     global_dns="9.9.9.9" \
-    wgd_port="{{awg_dashboard_port}}" \
+    wgd_port="10086" \
     public_ip="" \
     WGDASH=/opt/wgdashboard \
     hello='wprld'
@@ -45,7 +45,7 @@ COPY ./docker/entrypoint.sh /entrypoint.sh
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD pgrep -a gunicorn || exit 1
 
-EXPOSE {{awg_dashboard_port}}
+EXPOSE 10086
 WORKDIR ${WGDASH}
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
