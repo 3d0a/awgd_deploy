@@ -4,7 +4,8 @@ FROM node:18-alpine AS dependencies
 WORKDIR /app
 # Копируем только package.json сначала для лучшего кэширования
 COPY src/static/app/package*.json ./src/static/app/
-
+COPY src/static/app/vite.config.js ./src/static/app/
+COPY src/static/app/proxy.js ./src/static/app/  
 # Устанавливаем зависимости в правильной директории
 RUN cd src/static/app && \
     npm install && \
