@@ -12,10 +12,8 @@ RUN cd src/static/app && \
 # STAGE 2: Сборка приложения
 FROM node:18-alpine AS builder
 WORKDIR /app
-# Копируем зависимости из предыдущего этапа
+COPY src ./src
 COPY --from=dependencies /app/src/static/app/node_modules ./src/static/app/node_modules
-# Копируем исходный код
-COPY src/static/app ./src/static/app
 
 RUN cd src/static/app && \
     npm run build
