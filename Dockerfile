@@ -10,7 +10,7 @@ RUN cd /app/src/static/app \
     && npm install pinia@latest \
     && npm install pinia-plugin-persistedstate \
     && npm install marked \ 
-    && npm run build \
+    && npm run build
 
 FROM alpine:latest as production
 LABEL maintainer="dselen@nerthus.nl"
