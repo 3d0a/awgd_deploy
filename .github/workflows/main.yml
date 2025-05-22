@@ -43,5 +43,5 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha }}
           labels: |
             org.opencontainers.image.source=${{ github.repository_url }}
-          cache-from: type=gha  # Кэширование через GitHub Actions
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:cache,mode=max
