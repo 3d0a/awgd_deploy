@@ -2,18 +2,19 @@
 FROM node:18-alpine AS dependencies
 
 WORKDIR /app
-COPY src/static/app/package*.json ./src/static/app/
+COPY src/static/app/package*.json .
 
-RUN cd src/static/app && \
-    npm install && \
-    npm update && \
-    npm install pinia@latest pinia-plugin-persistedstate marked
+RUN npm install && \
+    && npm update \
+    && npm install pinia@latest \
+    && npm install pinia-plugin-persistedstate \
+    && npm install marked
 
 # STAGE 2: Сборка приложения
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY src ./src
-COPY --from=dependencies /app/src/static/app/node_modules ./src/static/app/node_modules
+COPY --from=dependencies /app/node_modules ./src/static/app/node_modules
 
 RUN cd src/static/app && \
     npm run build
