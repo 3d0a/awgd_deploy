@@ -1,7 +1,7 @@
 # STAGE 1: Установка зависимостей
 FROM node:18-alpine AS dependencies
 
-WORKDIR /app
+WORKDIR /
 # Копируем только package.json сначала для лучшего кэширования
 COPY src/static/app/package*.json ./src/static/app/
 COPY src/static/app/vite.config.js ./src/static/app/
@@ -20,7 +20,7 @@ WORKDIR /app
 # Копируем исходный код
 COPY src/static/app ./src/static/app
 # Копируем node_modules из предыдущей стадии
-COPY --from=dependencies /app/src/static/app/node_modules ./src/static/app/node_modules
+COPY --from=dependencies /src/static/app/node_modules ./src/static/app/node_modules
 
 # Собираем приложение
 RUN cd src/static/app && \
