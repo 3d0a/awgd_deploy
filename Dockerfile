@@ -18,7 +18,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Копируем исходный код
-COPY src/static/app ./src/static/app
+COPY src ./src
 # Копируем node_modules из предыдущей стадии
 COPY --from=dependencies /src/static/app/node_modules ./src/static/app/node_modules
 
