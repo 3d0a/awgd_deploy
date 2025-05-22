@@ -11,7 +11,6 @@ RUN cd /app/src/static/app \
     && npm install pinia-plugin-persistedstate \
     && npm install marked \ 
     && npm run build \
-    && rm -rf node_modules
 
 FROM alpine:latest as production
 LABEL maintainer="dselen@nerthus.nl"
@@ -39,7 +38,7 @@ RUN mkdir -p /data /configs ${WGDASH}/src /etc/amnezia/amneziawg
 
 # Копируем файлы
 COPY --from=builder /app/src ${WGDASH}/src
-COPY ./docker/entrypoint.sh /entrypoint.sh
+COPY .entrypoint.sh /entrypoint.sh
 
 # Настройки здоровья и портов
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
