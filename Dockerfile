@@ -13,7 +13,7 @@ RUN cd src/static/app && \
 FROM node:18-alpine AS builder
 WORKDIR /app
 # Копируем зависимости из предыдущего этапа
-COPY --from=dependencies /app/node_modules ./src/static/app/node_modules
+COPY --from=dependencies /app/src/static/app/node_modules ./src/static/app/node_modules
 # Копируем исходный код
 COPY src/static/app ./src/static/app
 
