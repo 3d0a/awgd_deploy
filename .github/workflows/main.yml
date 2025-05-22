@@ -17,18 +17,6 @@ jobs:
       # Получаем код из репозитория
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ghcr.io/${{ github.repository }}
-          tags: |
-            type=ref,event=branch  # Для веток (например: main)
-            type=ref,event=tag     # Для тегов (например: v1.0.0)
-            type=sha               # Тег с SHA коммита
-
             
       # Логин в GitHub Container Registry
       - name: Login to GHCR
@@ -52,7 +40,7 @@ jobs:
           push: true  # Публиковать образ после сборки
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ steps.meta.outputs.tags  }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha  }}
           labels: |
             org.opencontainers.image.source=${{ github.repository_url }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
