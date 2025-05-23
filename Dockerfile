@@ -16,7 +16,7 @@ RUN npm install \
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-COPY COPY . .
+COPY . .
 COPY --from=dependencies /node_modules /app/src/static/app/
 
 RUN /app/src/static/app/ \
