@@ -61,6 +61,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
       - name: Test SSH connection
         run: ssh korkunovia@192.168.1.102 "echo Connected!"
-
+      - name: Added ansible conf file to home
+        run: cp ../../ansible/ansible.conf > ~/.ansible.conf
       - name: Run deploy
         run: ansible-playbook -i ../../ansible/inventory.ini ../../ansible/playbook.yml
