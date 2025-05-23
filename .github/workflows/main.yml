@@ -62,6 +62,6 @@ jobs:
       - name: Test SSH connection
         run: ssh korkunovia@192.168.1.102 "echo Connected!"
       - name: Added ansible conf file to home
-        run: cp $GITHUB_WORKSPACE/ansible/ansible.conf > ~/.ansible.conf
+        run: cp $GITHUB_WORKSPACE/ansible/ansible.conf  ~/.ansible.conf
       - name: Run deploy
         run: ansible-playbook -i $GITHUB_WORKSPACE/ansible/inventory.ini $GITHUB_WORKSPACE/ansible/playbook.yml
