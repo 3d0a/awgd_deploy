@@ -16,7 +16,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 COPY src/ .
-COPY --from=dependencies /app/node_modules /app/src/static/app/
+COPY --from=dependencies /app/node_modules /app/src/static/app/node_modules
 
 RUN ls -la /app/src/static/app/
 
