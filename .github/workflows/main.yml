@@ -64,4 +64,4 @@ jobs:
       - name: Added ansible conf file to home
         run: cp $GITHUB_WORKSPACE/ansible/ansible.cfg  ~/.ansible.cfg
       - name: Run deploy
-        run: ansible-playbook -i $GITHUB_WORKSPACE/ansible/inventory.ini $GITHUB_WORKSPACE/ansible/playbook.yml
+        run: ansible-playbook --vault-password-file <(echo "${{ secrets.ANSIBLE_PASSWORD }}") -i $GITHUB_WORKSPACE/ansible/secret-inventory.ini $GITHUB_WORKSPACE/ansible/playbook.yml
