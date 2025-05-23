@@ -18,6 +18,8 @@ WORKDIR /app
 COPY src/ .
 COPY --from=dependencies /app/node_modules /app/src/static/app/
 
+RUN ls -la /app/src/static/app/
+
 RUN cd /app/src/static/app/ \
     && npm run build \
     &&  rm -rf node_modules
