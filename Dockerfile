@@ -5,7 +5,7 @@ WORKDIR /app
 COPY src/static/app/package.json .
 COPY src/static/app/vite.config.js .
 
-RUN npm install \
+RUN npm install --save-dev vite \
     && npm update \
     && npm install pinia@latest \
     && npm install pinia-plugin-persistedstate \
