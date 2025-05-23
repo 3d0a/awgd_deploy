@@ -2,8 +2,8 @@
 FROM node:18-alpine AS dependencies
 
 WORKDIR /app
-COPY src/static/app/package.json .
-COPY src/static/app/vite.config.js .
+COPY package.json .
+COPY vite.config.js .
 
 RUN npm install --save-dev vite \
     && npm update \
@@ -15,7 +15,7 @@ RUN npm install --save-dev vite \
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-COPY . .
+COPY src .
 COPY --from=dependencies /app/node_modules /app/src/static/app/
 
 RUN cd /app/src/static/app/ \
