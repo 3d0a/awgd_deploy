@@ -9,8 +9,7 @@ RUN npm install \
     && npm update \
     && npm install pinia@latest \
     && npm install pinia-plugin-persistedstate \
-    && npm install marked \ 
-    && npm run build 
+    && npm install marked
 
 # Сбока приложения
 FROM node:18-alpine AS builder
