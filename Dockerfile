@@ -1,15 +1,25 @@
-# сборка vue js
-FROM node:18-alpine AS builder
+# установка зависимостей vue js
+FROM node:18-alpine AS dependencies
 
 WORKDIR /app
-COPY . .
+COPY src/static/app/package.json .
+COPY src/static/app/vite.config.js .
 
-RUN cd /app/src/static/app \
-    && npm install \
+RUN npm install \
     && npm update \
     && npm install pinia@latest \
     && npm install pinia-plugin-persistedstate \
     && npm install marked \ 
+    && npm run build 
+
+# Сбока приложения
+FROM node:18-alpine AS builder
+WORKDIR /app
+
+COPY COPY . .
+COPY --from=dependencies /node_modules /app/src/static/app/
+
+RUN /app/src/static/app/ \
     && npm run build \
     &&  rm -rf node_modules
 
