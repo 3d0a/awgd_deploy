@@ -6,7 +6,7 @@ COPY package.json .
 COPY vite.config.js .
 
 RUN apk update \
-    && apk install git -y \
+    && apk add --no-cache git \
     && npm install --save-dev vite \
     && npm update \
     && npm install pinia@latest \
