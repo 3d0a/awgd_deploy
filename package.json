@@ -48,13 +48,13 @@
     "@semantic-release/changelog",
     "@semantic-release/npm",
     "@semantic-release/github",
-    "@semantic-release/exec", {
+    ["@semantic-release/exec", {
       "prepareCmd": "echo ${nextRelease.version} > VERSION"
-    },
-    "@semantic-release/git", {
-      "assets": ["package.json", "VERSION"],
+    }],
+    ["@semantic-release/git", {
+      "assets": ["package.json", "VERSION", "CHANGELOG.md"],
       "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
-    }
+    }]
   ],
   "repository": {
     "type": "git",
