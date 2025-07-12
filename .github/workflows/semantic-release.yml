@@ -9,8 +9,6 @@ on:
       - 'v*'
   pull_request:
     types: [closed]
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 jobs:
   release:
     name: Release
