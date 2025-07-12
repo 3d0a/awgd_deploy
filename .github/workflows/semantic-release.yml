@@ -46,9 +46,10 @@ jobs:
       with:
         context: .  # Где искать Dockerfile (корень репозитория)
         push: true  # Публиковать образ после сборки
+        #Переменну берем из semantic-release
         tags: |
           ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-          ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ env.VERSION  }} #Переменну берем из semantic-release
+          ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ env.VERSION  }}
         labels: |
           org.opencontainers.image.source=${{ github.repository_url }}
         cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:cache
