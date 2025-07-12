@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/3d0a/awgd_deploy/compare/v1.0.0...v1.1.0) (2025-07-12)
+
+
+### Features
+
+*  change release version ([18ee5af](https://github.com/3d0a/awgd_deploy/commit/18ee5af62e4b0c61b581c9fd041c134d3c24da34))
+
 # 1.0.0 (2025-07-12)
 
 
