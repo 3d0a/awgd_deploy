@@ -27,10 +27,10 @@ jobs:
           @semantic-release/git
 
 # Сохнаряем версию релиза, чтобы создать контейнер такой версии
-    - name: Get version
-      id: set-version
+    - name: Create version file manually
       run: |
-        echo "version=$(cat ./VERSION)" >> $GITHUB_OUTPUT
+        echo "$(jq -r .version package.json)" > VERSION
+        echo "MANUAL_VERSION=$(cat VERSION)" >> $GITHUB_ENV
 # Логин в GitHub Container Registry
     - name: Login to GHCR
       uses: docker/login-action@v3
