@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/3d0a/awgd_deploy/compare/v1.5.0...v1.6.0) (2025-07-12)
+
+
+### Features
+
+* test commit ([31dd08a](https://github.com/3d0a/awgd_deploy/commit/31dd08a5703512d6dec0c395ea45a100f072d082))
+
 # [1.5.0](https://github.com/3d0a/awgd_deploy/compare/v1.4.1...v1.5.0) (2025-07-12)
 
 
