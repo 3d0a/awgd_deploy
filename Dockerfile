@@ -5,7 +5,9 @@ WORKDIR /app
 COPY package.json .
 COPY vite.config.js .
 
-RUN npm install --save-dev vite \
+RUN apk update \
+    && apk install git -y \
+    && npm install --save-dev vite \
     && npm update \
     && npm install pinia@latest \
     && npm install pinia-plugin-persistedstate \
