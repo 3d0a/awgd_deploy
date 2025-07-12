@@ -1,9 +1,9 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches: [ main ]
-    tags: [ 'v*' ]  # Автоматическая сборка при создании тега (например v1.0.0)
+#  push:
+#    branches: [ main ]
+#    tags: [ 'v*' ]  # Автоматическая сборка при создании тега (например v1.0.0)
   workflow_dispatch:  # Ручной запуск через Actions вкладку
 
 jobs:
