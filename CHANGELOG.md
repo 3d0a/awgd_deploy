@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/3d0a/awgd_deploy/compare/v1.4.1...v1.5.0) (2025-07-12)
+
+
+### Bug Fixes
+
+* put release info back to package.json ([7332acf](https://github.com/3d0a/awgd_deploy/commit/7332acf57f7aa335986809f6d936578f03849f79))
+
+
+### Features
+
+* put release config to .releaserc.json ([983bbb0](https://github.com/3d0a/awgd_deploy/commit/983bbb0919e64ca757b2187912c815b3378574ec))
+
 # [1.1.0](https://github.com/3d0a/awgd_deploy/compare/v1.0.0...v1.1.0) (2025-07-12)
 
 
