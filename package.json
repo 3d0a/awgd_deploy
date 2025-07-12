@@ -39,9 +39,9 @@
     "@vitejs/plugin-vue": "^5.0.0",
     "vite": "^5.0.10"
   },
-  "branches": [
-    "main"
-  ],
+  "release": {
+    "branches": ["main"]
+  },
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
