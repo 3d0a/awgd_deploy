@@ -26,13 +26,12 @@ jobs:
           @semantic-release/changelog
           @semantic-release/git
 
-# Логин в GitHub Container Registry
 # Сохнаряем версию релиза, чтобы создать контейнер такой версии
     - name: Get version
       id: set-version
       run: |
         echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
-
+# Логин в GitHub Container Registry
     - name: Login to GHCR
       uses: docker/login-action@v3
       with:
