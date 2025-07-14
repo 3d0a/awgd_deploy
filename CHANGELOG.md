@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/3d0a/awgd_deploy/compare/v1.6.0...v1.7.0) (2025-07-14)
+
+
+### Bug Fixes
+
+* test empty commit ([ecbcdad](https://github.com/3d0a/awgd_deploy/commit/ecbcdad81edee3ea68efaacba7c383f405b3af55))
+
+
+### Features
+
+* delete space ([265bc97](https://github.com/3d0a/awgd_deploy/commit/265bc97f72b128ee849ecdd84b2a2934d2c8bf4b))
+
 # [1.6.0](https://github.com/3d0a/awgd_deploy/compare/v1.5.0...v1.6.0) (2025-07-12)
 
 
